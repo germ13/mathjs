@@ -1,0 +1,24 @@
+{
+  "name": "mathjs",
+  "version": "1.0.0",
+  "description": "Math library offering various number theoretical tools for experimentation.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/germ13/mathjs.git"
+  },
+  "keywords": [
+    "math",
+    "javascript",
+    "number-theory"
+  ],
+  "author": "juan serrano",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/germ13/mathjs/issues"
+  },
+  "homepage": "https://github.com/germ13/mathjs"
+}
