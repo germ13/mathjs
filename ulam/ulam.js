@@ -1,4 +1,4 @@
-var Point = require('./Point2D.js');
+var Point = require('../geometry/Point2D.js');
 
 function Ulam(x_max){
   var directions = ['r', 'u', 'l', 'd'];
