@@ -42,7 +42,6 @@ var R2 = function(canvas, _wlx, _wly, _wrx, _wuy){
       ctx.fillStyle = "#000000";
     }
     
-    
     ctx.fillRect(rx, ry, this.width / this.dx, this.height / this.dy);
     canvas.draw;
   }
