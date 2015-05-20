@@ -1,43 +1,55 @@
-(function(_rank, _unitLength){
-    var Point = require('../geometry/Point2d.js');
+(function(){
+    var Point = require('../geometry/Point2D.js');
     var Primes = require('../primes/primes.js');
+    var Colors = require('../geometry/colors.js');
+    var c = new Colors();
 
-    var points = [];
+    var PrimePivot = function(numberOfSides, sideLength){
+        var t = this;
 
-    var currentDirection = 0;
+        var currentColor = c.randomColor();
+        var currentPosition =  new Point(0,0,0, currentColor);
+        var currentDirection = 0;
 
-    var currentAngle = 0;
-    var currentPosition = [0,0];
+        var numberOfSides = numberOfSides || 3;
+        var sideLength = sideLength || 1;
 
-    points.push(new Point(currentPosition[0], currentPosition[1], 0));
+        this.rotate = function(){
+            currentDirection = (currentDirection + 1) % numberOfSides;
+        };
 
-    this.rotate = function(){
-       var result = currentDirection * 2 * Math.PI / 4;
-       currentDirection = (currentDirection + 1)  % 4;
-        currentAngle = currentAngle + currentDirection * 2 * Math.PI / 4;
-       return result;
+        this.directionVector = function(){
+            var x =  sideLength * Math.cos( ( currentDirection / (numberOfSides ) ) * 2 * Math.PI );
+            var y =  sideLength * Math.sin( ( currentDirection / (numberOfSides ) ) * 2 * Math.PI );
+            return new Point(x, y); //Point used as vector here.
+        };
+
+        this.move = function(){
+            currentPosition = currentPosition.add(this.directionVector());
+            return currentPosition;
+        };
+
+        this.iterate = function(max){
+            console.log('----------------------------------------------------');
+            console.log("Number of sides: " + numberOfSides);
+            var path = [];
+            path.push(currentPosition);
+            //this.rotate();
+            var p;
+            for(var i = 1; i <= max; i++){
+                if ( Primes.isPrime(i) ){
+                    this.rotate();
+                    currentColor = c.randomColor();
+                }
+                p = this.move();
+                //p.x = Math.floor(p.x * 10) / 10;
+                //p.y = Math.floor(p.y * 10) / 10;
+                p.value = i;
+                p.color = currentColor;
+                path.push(p);
+            }
+            return path;
+        };
     };
-
-
-    this.move = function(distance){
-        var result = [currentPosition.x, currentPosition.y];
-        //var rotation = this.rotate();
-        result[0] += (distance * Math.cos(rotation));
-        result[1] += (distance * Math.sin(rotation));
-
-        currentPosition[0] = result[0];
-        currentPosition[1] = result[1];
-
-        points.push(currentPosition);
-    };
-
-
-
-
-    var max = 20;
-
-    for(var i = 0; i < max; i++){
-
-
-    }
+    module.exports = PrimePivot;
 })();
